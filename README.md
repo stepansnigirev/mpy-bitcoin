@@ -1,2 +1,3 @@
-# mpy-hashlib
-hashlib C-module for micropython with sha1, sha256, sha512 and ripemd160 support
+# mpy-bitcoin
+
+extends `hashlib` micropython module and adds `_ecc` module with optimized C implementation of elliptic curves and hashing algorithms.
