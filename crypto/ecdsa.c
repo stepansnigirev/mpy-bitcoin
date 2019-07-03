@@ -31,7 +31,7 @@
 #include "ecdsa.h"
 #include "memzero.h"
 #include "secp256k1.h"
-#include "rng.h"
+#include "rand.h"
 
 // Set cp2 = cp1
 void point_copy(const curve_point *cp1, curve_point *cp2) { *cp2 = *cp1; }
@@ -183,9 +183,9 @@ static void generate_k_random(bignum256 *k, const bignum256 *prime) {
   do {
     int i;
     for (i = 0; i < 8; i++) {
-      k->val[i] = rng_get() & 0x3FFFFFFF;
+      k->val[i] = random32() & 0x3FFFFFFF;
     }
-    k->val[8] = rng_get() & 0xFFFF;
+    k->val[8] = random32() & 0xFFFF;
     // check that k is in range and not zero.
   } while (bn_is_zero(k) || !bn_is_less(k, prime));
 }
