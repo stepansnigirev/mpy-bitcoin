@@ -49,7 +49,7 @@ STATIC mp_obj_t _ecc_point_add(mp_obj_t point_a, mp_obj_t point_b){
     curve_point pa;
     ecdsa_read_pubkey(&secp256k1, bufinfo.buf, &pa);
 
-    mp_get_buffer_raise(point_a, &bufinfo, MP_BUFFER_READ);
+    mp_get_buffer_raise(point_b, &bufinfo, MP_BUFFER_READ);
     curve_point pb;
     ecdsa_read_pubkey(&secp256k1, bufinfo.buf, &pb);
 
