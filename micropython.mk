@@ -8,6 +8,8 @@ SRC_USERMOD += $(BITCOIN_MOD_DIR)/crypto/sha2.c
 SRC_USERMOD += $(BITCOIN_MOD_DIR)/crypto/bignum.c
 SRC_USERMOD += $(BITCOIN_MOD_DIR)/crypto/ecdsa.c
 SRC_USERMOD += $(BITCOIN_MOD_DIR)/crypto/secp256k1.c
+SRC_USERMOD += $(BITCOIN_MOD_DIR)/crypto/hmac.c
+SRC_USERMOD += $(BITCOIN_MOD_DIR)/crypto/pbkdf2.c
 SRC_USERMOD += $(BITCOIN_MOD_DIR)/hashlib.c
 SRC_USERMOD += $(BITCOIN_MOD_DIR)/ecc.c
 
