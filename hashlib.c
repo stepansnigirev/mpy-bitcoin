@@ -6,6 +6,7 @@
 #include "crypto/sha2.h"
 #include "crypto/ripemd160.h"
 #include "crypto/pbkdf2.h"
+#include "crypto/hmac.h"
 
 typedef struct _mp_obj_hash_t {
     mp_obj_base_t base;
@@ -270,6 +271,22 @@ STATIC mp_obj_t hashlib_pbkdf2_hmac_sha512(mp_uint_t n_args, const mp_obj_t *arg
 
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR(hashlib_pbkdf2_hmac_sha512_obj, 4, hashlib_pbkdf2_hmac_sha512);
 
+/************************** hmac_sha512 **************************/
+
+STATIC mp_obj_t hashlib_hmac_sha512(mp_uint_t n_args, const mp_obj_t *args){
+    //mp_obj_t password, mp_obj_t salt, mp_obj_t iterations, mp_obj_t len){
+    mp_buffer_info_t keybuf;
+    mp_get_buffer_raise(args[0], &keybuf, MP_BUFFER_READ);
+    mp_buffer_info_t msgbuf;
+    mp_get_buffer_raise(args[1], &msgbuf, MP_BUFFER_READ);
+    vstr_t vstr;
+    vstr_init_len(&vstr, 64);
+    hmac_sha512_oneline(keybuf.buf, keybuf.len, msgbuf.buf, msgbuf.len, (byte*)vstr.buf);
+    return mp_obj_new_str_from_vstr(&mp_type_bytes, &vstr);
+}
+
+STATIC MP_DEFINE_CONST_FUN_OBJ_VAR(hashlib_hmac_sha512_obj, 2, hashlib_hmac_sha512);
+
 /****************************** MODULE ******************************/
 
 STATIC const mp_rom_map_elem_t hashlib_module_globals_table[] = {
@@ -279,6 +296,7 @@ STATIC const mp_rom_map_elem_t hashlib_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_sha512), MP_ROM_PTR(&hashlib_sha512_type) },
     { MP_ROM_QSTR(MP_QSTR_ripemd160), MP_ROM_PTR(&hashlib_ripemd160_type) },
     { MP_ROM_QSTR(MP_QSTR_pbkdf2_hmac_sha512), MP_ROM_PTR(&hashlib_pbkdf2_hmac_sha512_obj) },
+    { MP_ROM_QSTR(MP_QSTR_hmac_sha512), MP_ROM_PTR(&hashlib_hmac_sha512_obj) },
 };
 
 STATIC MP_DEFINE_CONST_DICT(hashlib_module_globals, hashlib_module_globals_table);
